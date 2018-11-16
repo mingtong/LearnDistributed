@@ -48,6 +48,49 @@
   - Files are hard http://danluu.com/file-consistency/
   - On Designing and Deploying Internet-Scale Services http://static.usenix.org/event/lisa07/tech/full_papers/hamilton/hamilton_html/
 
+- 技术框架
+  - 负载均衡
+    - Nginx：高性能、高并发的web服务器；功能包括负载均衡、反向代理、静态内容缓存、访问控制；工作在应用层
+    - LVS： Linux virtual server，基于集群技术和Linux操作系统实现一个高性能、高可用的服务器；工作在网络层
+  - WebServer
+    - Apache
+    - Tomcat
+  - Service
+    - SOA
+    - MicroServices
+    - Spring Boot
+  - 容器
+    - Docker
+    - Kubernetes (k8s)
+  - 缓存
+    - Redis
+    - MemCache
+  - 协调中心
+    - ZooKeeper
+  - RPC
+    - gRPC
+    - Dubbo
+  - 消息队列
+    - Kafka
+    - RabbitMQ
+  - 实时数据平台
+    - akka
+    - Storm
+  - 离线数据平台
+    - Hadoop
+    - Spark
+  - DB Proxy
+    - cobar
+  - 数据库
+    - MySQL
+    - MongoDB
+    - HBase
+  - 搜索
+    - ElasticSearch
+    - solr
+  - 日志
+    - rsyslog
+    - elk
 - 参考
   - https://github.com/theanalyst/awesome-distributed-systems
   - https://github.com/aphyr/distsys-class
