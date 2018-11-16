@@ -3,22 +3,51 @@
 - 原理
   - 2PC Commit
   - 3PC Commit
-  - CAP 理论
-  - Paxos 理论
-  - Raft 一致性算法
-  - 谬论 http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/
+  - CAP 理论 http://en.wikipedia.org/wiki/CAP_theorem
+  - Paxos 理论 http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf
+  - Raft 一致性算法 https://raftconsensus.github.io/
+  - 分布式系统的谬论 http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/
   
 - 存储、数据库
-  - Dynamo: Amazon.
-  - Bigtable: Google.
-  - GFS: Google.
+  - Dynamo: Amazon. http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf
+  - Bigtable: Google. http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf
+  - GFS: Google. http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
   - Cassandra: A Decentralized Structured Storage System.
-  - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data.
+  - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. http://www.ssrc.ucsc.edu/Papers/weil-sc06.pdf
 
 - 日志、消息系统
-  - Log
-  - Kafka
+  - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
+  - Kafka，分布式消息处理系统。 http://notes.stephenholiday.com/Kafka.pdf
   
+- 一致性和容错
+  - 拜占廷容错 http://pmg.csail.mit.edu/papers/osdi99.pdf
+  - 拜占廷将军问题 http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf
+  - 分布式一致性的可能性 http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf
+  - Paxos 问题 http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf
+  - Chubby 锁服务，用于松耦合的分布式系统 http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf
   
- https://github.com/theanalyst/awesome-distributed-systems
-https://github.com/aphyr/distsys-class
+- 监控系统
+  - Dapper, Google. http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf
+  
+- 编程模型
+  - 分布式编程模型 http://web.cs.ucdavis.edu/~pandey/Research/Papers/icdcs01.pdf
+  - PSync, http://www.di.ens.fr/~cezarad/popl16.pdf
+  - Programming Models for Distributed Computing, http://heather.miller.am/teaching/cs7680/
+  - Logic and Lattices for Distributed Programming, http://db.cs.berkeley.edu/papers/UCB-lattice-tr.pdf
+  
+- 验证分布式系统
+  - Jepsen https://github.com/jepsen-io/jepsen
+  - Verdi http://verdi.uwplse.org/
+  
+- 技术博客
+  - How we implemented consistent hashing efficiently https://blog.ably.io/how-to-implement-consistent-hashing-efficiently-fe038d59fff2
+  - Notes on Distributed Systems for Young Bloods http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/
+  - High Scalability http://highscalability.com/
+  - All Things Distributed http://www.allthingsdistributed.com/
+  - Distributed Systems: Take Responsibility for Failover http://ivolo.me/distributed-systems-take-responsibility-for-failover/
+  - Files are hard http://danluu.com/file-consistency/
+  - On Designing and Deploying Internet-Scale Services http://static.usenix.org/event/lisa07/tech/full_papers/hamilton/hamilton_html/
+
+- 参考
+  - https://github.com/theanalyst/awesome-distributed-systems
+  - https://github.com/aphyr/distsys-class
