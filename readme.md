@@ -94,3 +94,4 @@
 - 参考
   - https://github.com/theanalyst/awesome-distributed-systems
   - https://github.com/aphyr/distsys-class
+  - https://www.cnblogs.com/xybaby/p/7787034.html
