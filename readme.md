@@ -21,3 +21,4 @@
   
   
  https://github.com/theanalyst/awesome-distributed-systems
+https://github.com/aphyr/distsys-class
