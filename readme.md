@@ -1,12 +1,24 @@
 ### 知识点
 
 - 原理
-  - 2PC Commit
-  - 3PC Commit
-  - CAP 理论 http://en.wikipedia.org/wiki/CAP_theorem
-  - Paxos 理论 http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf
-  - Raft 一致性算法 https://raftconsensus.github.io/
-  - 分布式系统的谬论 http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/
+  - [CAP 理论:](http://en.wikipedia.org/wiki/CAP_theorem)
+    - 一致性(Consistency): 多个副本间数据的一致
+    - 可用性(Availablity): 服务保持可用状态
+    - 分区容错性(PartitionTolerance): 在某个分区出现故障时，仍然可以提供服务 
+  - 2PC: 2 Phase Commit
+    1. Requst for Commit(投票阶段) 
+    2. Execute Commit(完成阶段)
+  - 3PC: 3 Phase Commit
+    1. CanCommit(询问)
+    2. PreCommit(预提交)
+    3. DoCommit(执行提交)
+  - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
+    - 算法过程
+    - 实现：Chubby(分布式锁服务 by Google)
+  - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
+    - 实现：ZooKeeper(分布式协调服务 by Yahoo)
+  - [Raft 一致性算法](https://raftconsensus.github.io/)
+  - [分布式系统的谬](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
   
 - 存储、数据库
   - Dynamo: Amazon. http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf
