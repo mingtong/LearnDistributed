@@ -1,6 +1,6 @@
-### 知识点
+## 分布式系统知识点
 
-- 原理
+### 原理
   - [CAP 理论:](http://en.wikipedia.org/wiki/CAP_theorem)
     - 一致性(Consistency): 多个副本间数据的一致
     - 可用性(Availablity): 服务保持可用状态
@@ -20,38 +20,38 @@
   - [Raft 一致性算法](https://raftconsensus.github.io/)
   - [分布式系统的谬](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
   
-- 存储、数据库
+### 存储、数据库
   - Dynamo: Amazon. http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf
   - Bigtable: Google. http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf
   - GFS: Google. http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
   - Cassandra: A Decentralized Structured Storage System.
   - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. http://www.ssrc.ucsc.edu/Papers/weil-sc06.pdf
 
-- 日志、消息系统
+### 日志、消息系统
   - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
   - Kafka，分布式消息处理系统。 http://notes.stephenholiday.com/Kafka.pdf
   
-- 一致性和容错
+### 一致性和容错
   - 拜占廷容错 http://pmg.csail.mit.edu/papers/osdi99.pdf
   - 拜占廷将军问题 http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf
   - 分布式一致性的可能性 http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf
   - Paxos 问题 http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf
   - Chubby 锁服务，用于松耦合的分布式系统 http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf
   
-- 监控系统
+### 监控系统
   - Dapper, Google. http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf
   
-- 编程模型
+### 编程模型
   - 分布式编程模型 http://web.cs.ucdavis.edu/~pandey/Research/Papers/icdcs01.pdf
   - PSync, http://www.di.ens.fr/~cezarad/popl16.pdf
   - Programming Models for Distributed Computing, http://heather.miller.am/teaching/cs7680/
   - Logic and Lattices for Distributed Programming, http://db.cs.berkeley.edu/papers/UCB-lattice-tr.pdf
   
-- 验证分布式系统
+### 验证分布式系统
   - Jepsen https://github.com/jepsen-io/jepsen
   - Verdi http://verdi.uwplse.org/
   
-- 技术博客
+### 技术博客
   - How we implemented consistent hashing efficiently https://blog.ably.io/how-to-implement-consistent-hashing-efficiently-fe038d59fff2
   - Notes on Distributed Systems for Young Bloods http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/
   - High Scalability http://highscalability.com/
@@ -60,7 +60,7 @@
   - Files are hard http://danluu.com/file-consistency/
   - On Designing and Deploying Internet-Scale Services http://static.usenix.org/event/lisa07/tech/full_papers/hamilton/hamilton_html/
 
-- 技术框架
+### 技术框架
   - 负载均衡
     - Nginx：高性能、高并发的web服务器；功能包括负载均衡、反向代理、静态内容缓存、访问控制；工作在应用层
     - LVS： Linux virtual server，基于集群技术和Linux操作系统实现一个高性能、高可用的服务器；工作在网络层
