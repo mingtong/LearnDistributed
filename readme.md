@@ -14,13 +14,17 @@
     3. DoCommit(执行提交)
   - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
     - 算法过程
-    - 实现：Chubby(分布式锁服务 by Google)
+    - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
   - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
     - 实现：ZooKeeper(分布式协调服务 by Yahoo)
   - [Raft 一致性算法](https://raftconsensus.github.io/)
   - [分布式系统的谬](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
+  - 拜占廷容错 http://pmg.csail.mit.edu/papers/osdi99.pdf
+  - 拜占廷将军问题 http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf
+  - 分布式一致性的可能性 http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf
+  - Paxos 问题 http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf
   
-### 存储、数据库
+### 分布式存储、数据库
   - Dynamo: Amazon. http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf
   - Bigtable: Google. http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf
   - GFS: Google. http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
@@ -31,12 +35,6 @@
   - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
   - Kafka，分布式消息处理系统。 http://notes.stephenholiday.com/Kafka.pdf
   
-### 一致性和容错
-  - 拜占廷容错 http://pmg.csail.mit.edu/papers/osdi99.pdf
-  - 拜占廷将军问题 http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf
-  - 分布式一致性的可能性 http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf
-  - Paxos 问题 http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf
-  - Chubby 锁服务，用于松耦合的分布式系统 http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf
   
 ### 监控系统
   - Dapper, Google. http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf
