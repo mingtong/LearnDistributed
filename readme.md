@@ -13,16 +13,16 @@
     2. PreCommit(预提交)
     3. DoCommit(执行提交)
   - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
-    - 算法过程
-    - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
+    - [算法过程](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29)
+    - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[Google-Chubby-PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
   - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
     - 实现：ZooKeeper(分布式协调服务 by Yahoo)
   - [Raft 一致性算法](https://raftconsensus.github.io/)
   - [分布式系统的谬](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
-  - 拜占廷容错 http://pmg.csail.mit.edu/papers/osdi99.pdf
-  - 拜占廷将军问题 http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf
-  - 分布式一致性的可能性 http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf
-  - Paxos 问题 http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf
+  - [拜占廷容错] http://pmg.csail.mit.edu/papers/osdi99.pdf
+  - [拜占廷将军问题] http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf
+  - [分布式一致性的可能性] http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf
+  - [Paxos 问题] http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf
   
 ### 分布式存储、数据库
   - Dynamo: Amazon. http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf
@@ -31,10 +31,41 @@
   - Cassandra: A Decentralized Structured Storage System.
   - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. http://www.ssrc.ucsc.edu/Papers/weil-sc06.pdf
 
-### 日志、消息系统
-  - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
-  - Kafka，分布式消息处理系统。 http://notes.stephenholiday.com/Kafka.pdf
+### SOA->MSA vs REST vs RPC vs 消息代理
+  - MSA: MicroService Architecture
+  - REST:
+  - RPC:
+
+### RPC(试图请求远程网络时像调用本地函数一样)
+  - Thrift(Facebook)编码格式，自带RPC
+  - ProtoBuf(Google)编码格式，gRPC
+  - Avro(Hadoop子项目)编码格式，自带RPC
+  - RPC 的问题：
+    - 本地函数的调用是可预测的; 而网络请求是不可预测的。
+    - 本地函数要么返回结果/抛出异常/永远不返回; 网络请求可能会超时，无法知道请求是否成功。
+    - 重试网络请求，可能会发生：请求已经完成，只是响应丢失的情况。
+    - 网络请求依赖于网络延迟。
+    - 本地函数的调用可以传递引用，网络请求则需要传递整个序列化的对象。
+    - SOA或REST 的客户端/服务端可以用不用语言实现，RPC框架必须将数据从一种语言转换成另一种。
+ 
+### 消息代理(单向数据流)
+  - 与RPC相比的优点：
+    - 如果接收方不可用，可以充当缓冲区，提高可靠性。
+    - 可以自动将消息重新发送到crash的进程，防止消息丢失。
+    - 避免了发送方需要知道接收方的IP，端口的情况。
+    - 支持一发多。
+    - 在逻辑上将发送方与接收方分离。
+  - RabbitMQ
+  - ActiveMQ
+  - [Kafka(Linkedin)](http://notes.stephenholiday.com/Kafka.pdf)
+
+### Actor模型(单进程中的并发模型)
+  - Akka
+  - Orleans
+  - Erlang OTP
   
+### 日志
+  - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
   
 ### 监控系统
   - Dapper, Google. http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf
