@@ -18,7 +18,8 @@
   - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
     - 实现：ZooKeeper(分布式协调服务 by Yahoo)
   - [Raft 一致性算法](https://raftconsensus.github.io/)
-  - [分布式系统的谬](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
+  - Gossip协议
+  - [分布式系统的谬论](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
   - [拜占廷容错](http://pmg.csail.mit.edu/papers/osdi99.pdf)
   - [拜占廷将军问题](http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf)
   - [分布式一致性的可能性](http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf)
@@ -65,7 +66,7 @@
     - 复制：在多个节点上保存相同数据的复本。
     - 分区：将大块数据扩分成多个小块子集分区。不同的分区分配给不同的节点。
 
-#### 复制(数据规模较小)
+### 复制(数据规模较小)
   - 复制类型：数据同步到其他节点的方式
     - 主从复制: 主写从读
     - 多主复制: 多主节点，一个主节点同时扮演其他主节点的从。使用场景：
@@ -105,7 +106,28 @@
     - 当读取时，并行请求多个节点，以版本号确定哪个节点的值更新而使用。
     - 失效节点上线后的数据修复: 读取时检测差异后再修复/后台进程不断反熵修复。
       
-#### 分区(单机无法存储整个数据集) 
+### 分区(单机无法存储整个数据集) 
+  - 不同数据库对分区的称呼:
+    - MongoDB | Elasticsearch: Shard
+    - HBase: Region
+    - Bigtable: tablet
+    - Cassandra | Riak: vnode
+    - Couchbase: vBucket
+  - 分区的目的: 将查询的负载**均衡的分布**在所有节点上
+  - 基于主键的范围分区: 比如A-C, D-F, 时间范围等。Bigtable采用这种分区，缺点是有些时候查询会导致热点。
+  - 基于主键的Hash分区: 通过Hash函数来划分主键的范围，以避免顺序区域过热。
+    - 但是这样仍然无法避免某些热点，比如某些社交媒体上的大v的热点事件，大v的用户id是不变的。
+    - 可以在id后加一个随机数，来分散请求，但是这样的后果是需要在应用层合并查询的结果。
+  - 分区与二级索引
+  - 分区再平衡: 当节点迁移时，需要重新分区使负载均衡。
+    - 动态平衡
+    - 手动平衡
+  - 请求路由: 客户端请求哪个节点?
+    - 客户端可以自由选择请求某个节点所在分区，如果不能处理，则转发给下一分区。(Cassandra使用gossip协议同步状态，不依赖ZK)
+    - 有一个路由层负责转发。(Linkedin的Espresso进行集群管理，实现路由层)
+    - 客户端感知分区与节点的分配关系(订阅消息感知变化，如ZooKeeper)
+    
+  
 
 ### 分布式存储/数据库
   - PostgreSQL(9.0+)
