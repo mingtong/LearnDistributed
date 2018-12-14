@@ -68,8 +68,11 @@
 #### 复制(数据规模较小)
   - 复制类型：数据同步到其他节点的方式
     - 主从复制: 主写从读
-    - 多主复制
-    - 无主复制
+    - 多主复制: 多主节点，一个主节点同时扮演其他主节点的从。使用场景：
+      - 多数据中心: 提高可用性和性能。
+      - 离线客户端: 比如手机断网后，添加的数据仍然希望在下次联网后同步。
+      - 协作编辑: 多个用户同时编辑数据。
+    - 无主复制: 任何节点都接受写请求，写请求同时发给所有节点。
   - 同步复制：主节点写完后等从节点确认后才完成。(可以配置为一个从节点是同步，其他从节点是异步)
     - 优点：如果主节点发生故障，从节点可以继续被访问，且服务一致。
     - 缺点：如果从节点无法完成确认(比如当机)，则主节点会被阻塞。
@@ -83,7 +86,25 @@
       - 确认节点失效：比如心跳超时(需合理设置超时时间，太长则恢复时花费越久，太短则可能是假失效)
       - 选举新主节点：共识选举
       - 新节点生效：新请求发向新节点，原节点上线后降为从节点(需丢弃当机前未完成复制的写请求)
-
+  - 同步日志
+    - ~~基于每条语句~~: 某些环境相关的函数，比如Now()会得到不同结果。 故不采用。
+    - ~~基于预写日志~~: 直接复制存储结构的底层数据，比如B-Tree日志。依赖于底层实现，故不采用。
+    - ~~基于触发器的复制~~: 数据改变时执行触发器，开销大，一般不采用。
+    - 逻辑日志复制(基于行): 逻辑日志与存储逻辑分离。 
+  - 同步滞后问题
+      - 读取自己写入的数据: 用户提交个人数据后，想立即查看自己的提交，如果从节点尚未同步，则看不到数据。**这时可以直接从主节点读取**。 
+      - 单调读: 用户从不同从节点读取数据，刷新页面后得到的数据可能不同。**对于同一个用户应该只使用同一个从节点**。
+      - 坚持读取顺序: 对于有顺序要求的数据写入，读取时仍然要按照这个顺序，否则会发生错误。
+  - 多主复制时的写冲突
+    - 当两个用户同时编辑了wiki的标题，user1改成A->B，user2改成A->C，无法确定使用哪一个，可能有以下解决方式:
+      - 基于一个值: 比如写入ID，一个随机数，一个UUID，或者时间戳，数值大的获胜，但是这样容易丢失数据。
+      - 合并二值: 比如写入 B/C。
+      - 保留冲突: 比如git merge时的字符串
+  - 无主复制的节点失效情况
+    - 当一个节点失效时，只要一半以上成功写入，可以忽略失败的节点。
+    - 当读取时，并行请求多个节点，以版本号确定哪个节点的值更新而使用。
+    - 失效节点上线后的数据修复: 读取时检测差异后再修复/后台进程不断反熵修复。
+      
 #### 分区(单机无法存储整个数据集) 
 
 ### 分布式存储/数据库
@@ -91,10 +112,11 @@
   - MySQL
   - Oracle Data Guard
   - SQLServer AlwaysOn Availability Groups
-  - Dynamo: Amazon. http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf
-  - Bigtable: Google. http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf
-  - GFS: Google. http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
-  - Cassandra: A Decentralized Structured Storage System.
+  - [Dynamo(Amazon)](http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf): 无主复制
+  - Cassandra: 去中心化，无主复制
+  - [BigTable(Google)(http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)
+  - [GFS(Google)](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf) http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
+  
   - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. http://www.ssrc.ucsc.edu/Papers/weil-sc06.pdf
 
   
