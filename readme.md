@@ -145,30 +145,40 @@
     3. DoCommit(执行提交)
   - 实践中的分布式事务: **由于难以保证，且有性能问题，所以云服务商基本不支持分布式事务**
   
-### 共识
+### 共识: 让节点就某件事情达成一致
+  - 使用场景:
+    - 主节点选举
+    - 原子事务提交: 事务在某些节点成功，在某些节点失败，为了让所有节点的结果一致，要么全部成功，要么全部失败。
+  - ZooKeeper: 分布式应用的协调服务，功能包括:
+    - 分配任务给节点
+    - 发现服务: 找到执行某个服务需要连接的IP地址
+    - 成员服务: 检测哪个节点处于活跃状态
   - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
     - [算法过程](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29)
     - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[Google-Chubby-PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
-  - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
+  - ZABf协议: ZooKeeper原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
     - 实现：ZooKeeper(分布式协调服务 by Yahoo)
   - [Raft 一致性算法](https://raftconsensus.github.io/)
-  - Gossip协议
+  - Gossip 协议
   - [分布式系统的谬论](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
   - [拜占廷容错](http://pmg.csail.mit.edu/papers/osdi99.pdf)
   - [拜占廷将军问题](http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf)
   - [分布式一致性的可能性](http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf)
   - [Paxos 问题](http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf)
+  
 ### 分布式存储/数据库
   - PostgreSQL(9.0+)
   - MySQL
   - Oracle Data Guard
   - SQLServer AlwaysOn Availability Groups
-  - Dynamo(Amazon): 分布式键值系统，无主复制。
-  - Cassandra: 去中心化，无主复制。
-  - GFS(Google)：分布式文件系统
+  - Dynamo(Amazon): 分布式键值数据库，无主复制，非开源。
+  - Cassandra: 分布式键值数据库，无主复制，去中心化，非关系型数据库
+  - GFS(Google): 分布式文件系统
+  - HDFS(GFS的开源实现): 分布式文件系统
   - Hadoop(Google)：分布式存储系统(包括多个组件，比如HDFS，MapReduce，HBASE)
   - BigTable(Google)，分布式表格系统，GFS作为其文件存储系统，使用MapReduce处理海量数据，使用Chubby作为协同服务
   - HBase(BigTable的开源实现)，Hadoop HDFS作为其文件存储系统，使用MapReduce处理海量数据，使用Zookeeper作为协同服务
+  - MapReduce(Google): 分布式计算模型
   - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data
   
 ### 日志
@@ -188,13 +198,13 @@
   - Verdi http://verdi.uwplse.org/
   
 ### 技术博客
-  - How we implemented consistent hashing efficiently https://blog.ably.io/how-to-implement-consistent-hashing-efficiently-fe038d59fff2
-  - Notes on Distributed Systems for Young Bloods http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/
-  - High Scalability http://highscalability.com/
-  - All Things Distributed http://www.allthingsdistributed.com/
+  - [How we implemented consistent hashing efficiently](https://blog.ably.io/how-to-implement-consistent-hashing-efficiently-fe038d59fff2)
+  - [Notes on Distributed Systems for Young Bloods](http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/)
+  - [High Scalability](http://highscalability.com/)
+  - [All Things Distributed](http://www.allthingsdistributed.com/)
   - Distributed Systems: Take Responsibility for Failover http://ivolo.me/distributed-systems-take-responsibility-for-failover/
-  - Files are hard http://danluu.com/file-consistency/
-  - On Designing and Deploying Internet-Scale Services http://static.usenix.org/event/lisa07/tech/full_papers/hamilton/hamilton_html/
+  - [Files are hard](http://danluu.com/file-consistency/)
+  - [On Designing and Deploying Internet-Scale Services]( http://static.usenix.org/event/lisa07/tech/full_papers/hamilton/hamilton_html/)
 
 ### 技术框架
   - 负载均衡
@@ -203,10 +213,6 @@
   - WebServer
     - Apache
     - Tomcat
-  - Service
-    - SOA
-    - MicroServices
-    - Spring Boot
   - 容器
     - Docker
     - Kubernetes (k8s)
@@ -215,9 +221,6 @@
     - MemCache
   - 协调中心
     - ZooKeeper
-  - RPC
-    - gRPC
-    - Dubbo
   - 消息队列
     - Kafka
     - RabbitMQ
@@ -229,17 +232,13 @@
     - Spark
   - DB Proxy
     - cobar
-  - 数据库
-    - MySQL
-    - MongoDB
-    - HBase
   - 搜索
     - ElasticSearch
     - solr
   - 日志
     - rsyslog
     - elk
-- 参考
+### 参考
   - 《Design Data-Insentive Application》
   - https://github.com/theanalyst/awesome-distributed-systems
   - https://github.com/aphyr/distsys-class
