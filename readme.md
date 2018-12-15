@@ -156,7 +156,7 @@
   - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
     - [算法过程](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29)
     - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[Google-Chubby-PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
-  - ZABf协议: ZooKeeper原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
+  - ZAB协议: ZooKeeper原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
     - 实现：ZooKeeper(分布式协调服务 by Yahoo)
   - [Raft 一致性算法](https://raftconsensus.github.io/)
   - Gossip 协议
