@@ -1,29 +1,4 @@
 ## 分布式系统知识点
-
-### 原理
-  - [CAP 理论:](http://en.wikipedia.org/wiki/CAP_theorem)
-    - 一致性(Consistency): 多个副本间数据的一致
-    - 可用性(Availablity): 服务保持可用状态
-    - 分区容错性(PartitionTolerance): 在某个分区出现故障时，仍然可以提供服务 
-  - 2PC: 2 Phase Commit
-    1. Requst for Commit(投票阶段) 
-    2. Execute Commit(完成阶段)
-  - 3PC: 3 Phase Commit
-    1. CanCommit(询问)
-    2. PreCommit(预提交)
-    3. DoCommit(执行提交)
-  - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
-    - [算法过程](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29)
-    - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[Google-Chubby-PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
-  - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
-    - 实现：ZooKeeper(分布式协调服务 by Yahoo)
-  - [Raft 一致性算法](https://raftconsensus.github.io/)
-  - Gossip协议
-  - [分布式系统的谬论](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
-  - [拜占廷容错](http://pmg.csail.mit.edu/papers/osdi99.pdf)
-  - [拜占廷将军问题](http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf)
-  - [分布式一致性的可能性](http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf)
-  - [Paxos 问题](http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf)
   
 ### 数据编码演化：SOA->MSA vs REST vs RPC vs 异步消息代理 vs Actor
   - MSA: MicroService Architecture
@@ -106,7 +81,7 @@
     - 当读取时，并行请求多个节点，以版本号确定哪个节点的值更新而使用。
     - 失效节点上线后的数据修复: 读取时检测差异后再修复/后台进程不断反熵修复。
       
-### 分区(单机无法存储整个数据集) 
+### 分区(单机无法存储整个数据集): 将数据分布在多个节点上
   - 不同数据库对分区的称呼:
     - MongoDB | Elasticsearch: Shard
     - HBase: Region
@@ -148,25 +123,59 @@
   - 2PL: 二阶段锁，多个事务可以同时读取一个对象，但是一旦有写操作，必须独占访问
 
 ### 分布式的挑战
-  - 不可靠的网络(网络，硬件，超时，阻塞)
+  - 不可靠的网络(网络，乱序，硬件，超时，阻塞)
   - 不可靠的时钟
-
+  - 节点暂停(垃圾回收，当机)
+  
+### 一致性
+  - 可线性化(Linearizability): 让分布式系统看起来只有一个副本，比如后查询的结果一定是基于先查询的结果。
+  - 如何做到线性化？
+    - 顺序保证
+    - 全序广播
+  - [CAP 理论:](http://en.wikipedia.org/wiki/CAP_theorem): 不可能同时做到以下3者
+    - 一致性(Consistency): 多个副本间数据的一致
+    - 可用性(Availablity): 服务保持可用状态
+    - 分区容错性(PartitionTolerance): 在某个分区出现故障时，仍然可以提供服务 
+  - 2PC: 2 Phase Commit，阻塞式，需要有一个协调者来协调所有参与者
+    1. Requst for Commit(投票阶段) 
+    2. Execute Commit(完成阶段)
+  - 3PC: 3 Phase Commit，非阻塞式，依赖于一个故障检测器，判断节点是否当机
+    1. CanCommit(询问)
+    2. PreCommit(预提交)
+    3. DoCommit(执行提交)
+  - 实践中的分布式事务: **由于难以保证，且有性能问题，所以云服务商基本不支持分布式事务**
+  
+### 共识
+  - [Paxos 理论](http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-paxos.pdf)
+    - [算法过程](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29)
+    - 实现：Chubby(分布式锁服务 by Google)，用于松耦合的分布式系统，[Google-Chubby-PDF](http://static.googleusercontent.com/media/research.google.com/en//archive/chubby-osdi06.pdf)
+  - ZAB: ZK原子消息广播协议, [与Paxos的比较](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos)
+    - 实现：ZooKeeper(分布式协调服务 by Yahoo)
+  - [Raft 一致性算法](https://raftconsensus.github.io/)
+  - Gossip协议
+  - [分布式系统的谬论](http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/)
+  - [拜占廷容错](http://pmg.csail.mit.edu/papers/osdi99.pdf)
+  - [拜占廷将军问题](http://bnrg.cs.berkeley.edu/~adj/cs16x/hand-outs/Original_Byzantine.pdf)
+  - [分布式一致性的可能性](http://macs.citadel.edu/rudolphg/csci604/ImpossibilityofConsensus.pdf)
+  - [Paxos 问题](http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf)
 ### 分布式存储/数据库
   - PostgreSQL(9.0+)
   - MySQL
   - Oracle Data Guard
   - SQLServer AlwaysOn Availability Groups
-  - [Dynamo(Amazon)](http://bnrg.eecs.berkeley.edu/~randy/Courses/CS294.F07/Dynamo.pdf): 无主复制
-  - Cassandra: 去中心化，无主复制
-  - [BigTable(Google)(http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)
-  - [GFS(Google)](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf) http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
-  - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. http://www.ssrc.ucsc.edu/Papers/weil-sc06.pdf
+  - Dynamo(Amazon): 分布式键值系统，无主复制。
+  - Cassandra: 去中心化，无主复制。
+  - GFS(Google)：分布式文件系统
+  - Hadoop(Google)：分布式存储系统(包括多个组件，比如HDFS，MapReduce，HBASE)
+  - BigTable(Google)，分布式表格系统，GFS作为其文件存储系统，使用MapReduce处理海量数据，使用Chubby作为协同服务
+  - HBase(BigTable的开源实现)，Hadoop HDFS作为其文件存储系统，使用MapReduce处理海量数据，使用Zookeeper作为协同服务
+  - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data
   
 ### 日志
   - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
   
 ### 监控系统
-  - Dapper, Google. http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf
+  - Dapper(Google)
   
 ### 编程模型
   - 分布式编程模型 http://web.cs.ucdavis.edu/~pandey/Research/Papers/icdcs01.pdf
