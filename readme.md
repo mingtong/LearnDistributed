@@ -147,6 +147,10 @@
   - 可串行性: 严格按照顺序执行
   - 2PL: 二阶段锁，多个事务可以同时读取一个对象，但是一旦有写操作，必须独占访问
 
+### 分布式的挑战
+  - 不可靠的网络(网络，硬件，超时，阻塞)
+  - 不可靠的时钟
+
 ### 分布式存储/数据库
   - PostgreSQL(9.0+)
   - MySQL
@@ -156,9 +160,7 @@
   - Cassandra: 去中心化，无主复制
   - [BigTable(Google)(http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)
   - [GFS(Google)](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/archive/gfs-sosp2003.pdf) http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.161.6751&rep=rep1&type=pdf
-  
   - CRUSH: Controlled, Scalable, Decentralized Placement of Replicated Data. http://www.ssrc.ucsc.edu/Papers/weil-sc06.pdf
-
   
 ### 日志
   - Log http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
