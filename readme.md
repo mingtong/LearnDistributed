@@ -207,6 +207,9 @@
   - [On Designing and Deploying Internet-Scale Services]( http://static.usenix.org/event/lisa07/tech/full_papers/hamilton/hamilton_html/)
 
 ### 技术框架
+  - 反向代理
+    - Forward Proxy: Acting on behalf of a requestor (or service consumer)
+    - Reverse Proxy: Acting on behalf of service/content producer.
   - 负载均衡
     - Nginx：高性能、高并发的web服务器；功能包括负载均衡、反向代理、静态内容缓存、访问控制；工作在应用层
     - LVS： Linux virtual server，基于集群技术和Linux操作系统实现一个高性能、高可用的服务器；工作在网络层
