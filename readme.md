@@ -245,4 +245,6 @@
   - 《Design Data-Insentive Application》
   - https://github.com/theanalyst/awesome-distributed-systems
   - https://github.com/aphyr/distsys-class
-  - https://www.cnblogs.com/xybaby/p/7787034.html
+  - [什么是分布式系统，如何学习分布式系统](https://www.cnblogs.com/xybaby/p/7787034.html)
+  - [Notes on Distributed Systems for Young Bloods](https://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/)
+  - [Distributed systems theory for the distributed systems engineer](https://www.the-paper-trail.org/post/2014-08-09-distributed-systems-theory-for-the-distributed-systems-engineer/)
